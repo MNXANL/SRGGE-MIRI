@@ -73,7 +73,7 @@ static VertexClustering LOD;
 
 
 GLWidget::GLWidget(QWidget *parent)
-    : QGLWidget(parent), initialized_(false), width_(0.0), height_(0.0), num_instances(1), dist_offset(1.0), myLod(0)
+    : QGLWidget(parent), initialized_(false), width_(0.0), height_(0.0), num_instances(1), dist_offset(1.0), myLod(0), my_method( "Median" ), file("../models/sphere.ply")
 {
   setFocusPolicy(Qt::StrongFocus);
   iniTime = time( NULL );
@@ -86,7 +86,7 @@ GLWidget::GLWidget(QWidget *parent)
 GLWidget::~GLWidget() {}
 
 bool GLWidget::LoadModel(const QString &filename) {
-  std::string file = filename.toUtf8().constData();
+  /*std::string*/ file = filename.toUtf8().constData();
   size_t pos = file.find_last_of(".");
   std::string type = file.substr(pos + 1);
 
@@ -101,11 +101,12 @@ bool GLWidget::LoadModel(const QString &filename) {
   if (res) {
     mesh_.reset(mesh.release());
     camera_.UpdateModel(mesh_->min_, mesh_->max_);
-    // static VertexClustering LOD;
-    LOD.buildCluster( mesh_->vertices_, mesh_->faces_, mesh_->normals_,   mesh_->min_, mesh_->max_ );
+
+    int N = LOD.buildCluster( mesh_->vertices_, mesh_->faces_, mesh_->normals_,   mesh_->min_, mesh_->max_, my_method );
+    std::cout << "Using " << N << " items" << std::endl;
 
     // TODO(students): Create / Initialize buffers.
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < N; ++i) {
         // Create & bind empty VAO
         glGenVertexArrays(1, &VAO[i]);
         glBindVertexArray(VAO[i]);
@@ -292,7 +293,6 @@ void GLWidget::paintGL() {
       glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
       glBindVertexArray(0);
 
-      std::cout << "LOD = " << myLod << std::endl;
 
       emit SetFaces(    QString(std::to_string(LOD.facesPerLOD[ myLod ].size() / 3).c_str()) );
       emit SetVertices( QString(std::to_string(LOD.vtxPerLOD[ myLod ].size()   / 3).c_str()) );
@@ -323,5 +323,12 @@ void GLWidget::SetDistanceOffset(double offset){
 
 void GLWidget::SetLevelOfDetail(int lod) {
     myLod = lod;
+    updateGL();
+}
+
+
+void GLWidget::SetMethod(QString method) {
+    my_method = method.toUtf8().constData();
+    LoadModel( QString::fromUtf8(file.c_str()) );
     updateGL();
 }

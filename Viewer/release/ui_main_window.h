@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -45,6 +46,8 @@ public:
     QDoubleSpinBox *doubleSpinBox;
     QSpinBox *spinBox_2;
     QLabel *label_3;
+    QComboBox *comboBox;
+    QLabel *label_4;
     QSpacerItem *Spacer;
     QGroupBox *RenderOptions;
     QLabel *Label_NumFaces;
@@ -115,11 +118,20 @@ public:
         spinBox_2 = new QSpinBox(TreeOptions);
         spinBox_2->setObjectName(QString::fromUtf8("spinBox_2"));
         spinBox_2->setGeometry(QRect(140, 110, 51, 31));
-        spinBox_2->setMaximum(9);
+        spinBox_2->setMaximum(7);
         spinBox_2->setValue(0);
         label_3 = new QLabel(TreeOptions);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(10, 110, 121, 31));
+        comboBox = new QComboBox(TreeOptions);
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->addItem(QString());
+        comboBox->setObjectName(QString::fromUtf8("comboBox"));
+        comboBox->setGeometry(QRect(10, 170, 181, 25));
+        label_4 = new QLabel(TreeOptions);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(10, 150, 181, 21));
 
         Configuration->addWidget(TreeOptions);
 
@@ -179,6 +191,7 @@ public:
         QObject::connect(spinBox, SIGNAL(valueChanged(int)), glwidget, SLOT(SetNumInstances(int)));
         QObject::connect(doubleSpinBox, SIGNAL(valueChanged(double)), glwidget, SLOT(SetDistanceOffset(double)));
         QObject::connect(spinBox_2, SIGNAL(valueChanged(int)), glwidget, SLOT(SetLevelOfDetail(int)));
+        QObject::connect(comboBox, SIGNAL(currentTextChanged(QString)), glwidget, SLOT(SetMethod(QString)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -195,9 +208,14 @@ public:
         actionLoad_Diffuse->setText(QApplication::translate("MainWindow", "Load Diffuse", nullptr));
         TreeOptions->setTitle(QApplication::translate("MainWindow", "Options", nullptr));
         label->setText(QApplication::translate("MainWindow", "Num. Instances", nullptr));
-        label_2->setText(QApplication::translate("MainWindow", "Distance objects", nullptr));
-        label_3->setText(QApplication::translate("MainWindow", "Level of Detail (LOD)", nullptr));
-        RenderOptions->setTitle(QApplication::translate("MainWindow", "Scene Information", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "Distance between objects", nullptr));
+        label_3->setText(QApplication::translate("MainWindow", "Level of Detail", nullptr));
+        comboBox->setItemText(0, QApplication::translate("MainWindow", "Median", nullptr));
+        comboBox->setItemText(1, QApplication::translate("MainWindow", "Error Quadrics", nullptr));
+        comboBox->setItemText(2, QApplication::translate("MainWindow", "Shape-Preserving", nullptr));
+
+        label_4->setText(QApplication::translate("MainWindow", "Method for selecting vertices", nullptr));
+        RenderOptions->setTitle(QApplication::translate("MainWindow", "Object and Scene Information", nullptr));
         Label_NumFaces->setText(QApplication::translate("MainWindow", "0", nullptr));
         Label_Faces->setText(QApplication::translate("MainWindow", "Faces", nullptr));
         Label_Vertices->setText(QApplication::translate("MainWindow", "Vertices", nullptr));

@@ -10,6 +10,7 @@
 #include <iostream>
 #include <memory>
 #include <map>
+#include <set>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -20,13 +21,21 @@
 class VertexClustering
 {
 public:
-    VertexClustering() {}
-    void buildCluster( std::vector<float>& vtx, std::vector<int>& faces, std::vector<float>& norm,
-                      Eigen::Vector3f& min, Eigen::Vector3f& max );
+    int buildCluster( std::vector<float>& vtx, std::vector<int>& faces, std::vector<float>& normals,
+                      Eigen::Vector3f& min, Eigen::Vector3f& max, std::string method );
+
+    void calcQMatrices( std::vector<float>& vtx, std::vector<float>& norm );
+    void getNewNormals(const std::vector<float> &newVtx, const std::vector<int> &newFaces, std::vector<float> &newNormals  );
+
 
     std::vector < std::vector< float > > vtxPerLOD;
     std::vector < std::vector< int > >   facesPerLOD;
     std::vector < std::vector< float > > normPerLOD;
+private:
+    int MAX_LOD;
+
+    std::vector < std::vector< float > > Grid;
+    std::vector< Eigen::Matrix4f > QMatrixPerVert;
 };
 
 #endif // VERTEXCLUSTERING_H

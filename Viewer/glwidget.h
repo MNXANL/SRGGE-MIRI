@@ -98,6 +98,17 @@ class GLWidget : public QGLWidget {
   /**
   * @brief num_instances Number of instances of the model.
   */
+  std::string my_method;
+
+
+  /**
+  * @brief file Model filename.
+  */
+  std::string file;
+
+  /**
+  * @brief num_instances Number of instances of the model.
+  */
   float dist_offset;
 
   /**
@@ -136,6 +147,11 @@ class GLWidget : public QGLWidget {
    * @brief SetLevelOfDetail Sets the level of detail of the model.
    */
   void SetLevelOfDetail(int lod);
+
+  /**
+   * @brief SetMethod Sets the vertex-selection method for the clustering
+   */
+  void SetMethod(QString method);
 
 
 

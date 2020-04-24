@@ -1394,14 +1394,24 @@ release/main_window.o: main_window.cc main_window.h \
 		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		/opt/Qt/5.12.7/gcc_64/include/QtGui/qguiapplication.h \
 		/opt/Qt/5.12.7/gcc_64/include/QtGui/qinputmethod.h \
-		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/QDoubleSpinBox \
-		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qspinbox.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/QComboBox \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qcombobox.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qstyleoption.h \
 		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qabstractspinbox.h \
 		/opt/Qt/5.12.7/gcc_64/include/QtGui/qvalidator.h \
 		/opt/Qt/5.12.7/gcc_64/include/QtCore/qregularexpression.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qslider.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qabstractslider.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qstyle.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qtabbar.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qrubberband.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qframe.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/QDoubleSpinBox \
+		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qspinbox.h \
 		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/QGroupBox \
 		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qgroupbox.h \
-		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qframe.h \
 		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/QHBoxLayout \
 		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qboxlayout.h \
 		/opt/Qt/5.12.7/gcc_64/include/QtWidgets/qlayout.h \
@@ -1575,7 +1585,8 @@ release/glwidget.o: glwidget.cc glwidget.h \
 		/opt/Qt/5.12.7/gcc_64/include/QtCore/QString \
 		camera.h \
 		triangle_mesh.h \
-		mesh_io.h
+		mesh_io.h \
+		vertexclustering.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release/glwidget.o glwidget.cc
 
 release/camera.o: camera.cc camera.h

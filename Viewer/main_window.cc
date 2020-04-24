@@ -25,9 +25,12 @@ void MainWindow::on_actionLoad_triggered() {
   filename = QFileDialog::getOpenFileName(this, tr("Load model"), "../models",
                                           tr("PLY Files ( *.ply )"));
   if (!filename.isNull()) {
-    if (!ui->glwidget->LoadModel(filename))
+    if (!ui->glwidget->LoadModel(filename)){
       QMessageBox::warning(this, tr("Error"),
                            tr("The file could not be opened"));
+    }
+    else
+        ui->glwidget->updateGL();
   }
 }
 

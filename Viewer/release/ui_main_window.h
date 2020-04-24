@@ -100,6 +100,7 @@ public:
         label = new QLabel(TreeOptions);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(10, 30, 121, 31));
+        label->setWordWrap(true);
         spinBox = new QSpinBox(TreeOptions);
         spinBox->setObjectName(QString::fromUtf8("spinBox"));
         spinBox->setGeometry(QRect(140, 30, 51, 31));
@@ -118,12 +119,14 @@ public:
         spinBox_2 = new QSpinBox(TreeOptions);
         spinBox_2->setObjectName(QString::fromUtf8("spinBox_2"));
         spinBox_2->setGeometry(QRect(140, 110, 51, 31));
-        spinBox_2->setMaximum(7);
-        spinBox_2->setValue(0);
+        spinBox_2->setMinimum(1);
+        spinBox_2->setMaximum(10);
+        spinBox_2->setValue(1);
         label_3 = new QLabel(TreeOptions);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(10, 110, 121, 31));
         comboBox = new QComboBox(TreeOptions);
+        comboBox->addItem(QString());
         comboBox->addItem(QString());
         comboBox->addItem(QString());
         comboBox->addItem(QString());
@@ -207,12 +210,13 @@ public:
         actionLoad_Specular->setText(QApplication::translate("MainWindow", "Load Specular", nullptr));
         actionLoad_Diffuse->setText(QApplication::translate("MainWindow", "Load Diffuse", nullptr));
         TreeOptions->setTitle(QApplication::translate("MainWindow", "Options", nullptr));
-        label->setText(QApplication::translate("MainWindow", "Num. Instances", nullptr));
-        label_2->setText(QApplication::translate("MainWindow", "Distance between objects", nullptr));
-        label_3->setText(QApplication::translate("MainWindow", "Level of Detail", nullptr));
-        comboBox->setItemText(0, QApplication::translate("MainWindow", "Median", nullptr));
+        label->setText(QApplication::translate("MainWindow", "Num. instances              per dimension", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "Distance between instances", nullptr));
+        label_3->setText(QApplication::translate("MainWindow", "Cell subdivisions", nullptr));
+        comboBox->setItemText(0, QApplication::translate("MainWindow", "Mean", nullptr));
         comboBox->setItemText(1, QApplication::translate("MainWindow", "Error Quadrics", nullptr));
         comboBox->setItemText(2, QApplication::translate("MainWindow", "Shape-Preserving", nullptr));
+        comboBox->setItemText(3, QApplication::translate("MainWindow", "Voxelize", nullptr));
 
         label_4->setText(QApplication::translate("MainWindow", "Method for selecting vertices", nullptr));
         RenderOptions->setTitle(QApplication::translate("MainWindow", "Object and Scene Information", nullptr));

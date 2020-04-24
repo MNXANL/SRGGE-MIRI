@@ -73,7 +73,7 @@ static VertexClustering LOD;
 
 
 GLWidget::GLWidget(QWidget *parent)
-    : QGLWidget(parent), initialized_(false), width_(0.0), height_(0.0), num_instances(1), dist_offset(1.0), myLod(0), my_method( "Median" ), file("../models/sphere.ply")
+    : QGLWidget(parent), initialized_(false), width_(0.0), height_(0.0), num_instances(1), dist_offset(1.0), myLod(0), my_method( "Mean" ), file("../models/sphere.ply")
 {
   setFocusPolicy(Qt::StrongFocus);
   iniTime = time( NULL );
@@ -103,7 +103,6 @@ bool GLWidget::LoadModel(const QString &filename) {
     camera_.UpdateModel(mesh_->min_, mesh_->max_);
 
     int N = LOD.buildCluster( mesh_->vertices_, mesh_->faces_, mesh_->normals_,   mesh_->min_, mesh_->max_, my_method );
-    std::cout << "Using " << N << " items" << std::endl;
 
     // TODO(students): Create / Initialize buffers.
     for (int i = 0; i < N; ++i) {
@@ -322,7 +321,7 @@ void GLWidget::SetDistanceOffset(double offset){
 }
 
 void GLWidget::SetLevelOfDetail(int lod) {
-    myLod = lod;
+    myLod = lod - 1;
     updateGL();
 }
 

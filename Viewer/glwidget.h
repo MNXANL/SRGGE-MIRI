@@ -14,6 +14,7 @@
 
 #include "./camera.h"
 #include "./triangle_mesh.h"
+#include "./mapmanager.h"
 
 class GLWidget : public QGLWidget {
   Q_OBJECT
@@ -28,7 +29,7 @@ class GLWidget : public QGLWidget {
    * @param filename Path to the PLY model.
    * @return Whether it was able to load the model.
    */
-  bool LoadModel(const QString &filename);
+  bool LoadModel(const QString &filename, int slot = 0);
 
  protected:
   /**
@@ -127,6 +128,17 @@ class GLWidget : public QGLWidget {
   float height_;
 
 
+ // NEW FUNCTIONS
+
+  int getContribution( Eigen::Matrix4f& model, Eigen::Matrix4f& view, int& i, int& j, int OFFSET=0 );
+  void calculateLevelPerModelInstance( bool hyst, Eigen::Matrix4f& model, Eigen::Matrix4f& view, int myFrame );
+
+  std::pair<int, int> getMinPosition( Eigen::Matrix4f& model, Eigen::Matrix4f& view );
+  std::pair<int, int> getMaxPosition( Eigen::Matrix4f& model, Eigen::Matrix4f& view );
+
+  int triSum_;
+  bool hyst_;
+
  protected slots:
   /**
    * @brief paintGL Function that handles rendering the scene.
@@ -153,6 +165,11 @@ class GLWidget : public QGLWidget {
    */
   void SetMethod(QString method);
 
+  /**
+   * @brief SetHysteriesis Sets if hysteriesis is enabled or not.
+   */
+  void SetHysteriesis(bool checked) ;
+
 
 
  signals:
@@ -170,6 +187,9 @@ class GLWidget : public QGLWidget {
    * @brief SetFaces Signal that updates the interface label "Framerate".
    */
   void SetFramerate(QString);
+
+
+
 
 };
 

@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QGroupBox>
@@ -44,10 +45,9 @@ public:
     QSpinBox *spinBox;
     QLabel *label_2;
     QDoubleSpinBox *doubleSpinBox;
-    QSpinBox *spinBox_2;
-    QLabel *label_3;
     QComboBox *comboBox;
     QLabel *label_4;
+    QCheckBox *checkBox;
     QSpacerItem *Spacer;
     QGroupBox *RenderOptions;
     QLabel *Label_NumFaces;
@@ -104,7 +104,7 @@ public:
         spinBox = new QSpinBox(TreeOptions);
         spinBox->setObjectName(QString::fromUtf8("spinBox"));
         spinBox->setGeometry(QRect(140, 30, 51, 31));
-        spinBox->setMaximum(100);
+        spinBox->setMaximum(50);
         spinBox->setValue(1);
         label_2 = new QLabel(TreeOptions);
         label_2->setObjectName(QString::fromUtf8("label_2"));
@@ -116,15 +116,6 @@ public:
         doubleSpinBox->setMaximum(10000.000000000000000);
         doubleSpinBox->setSingleStep(0.100000000000000);
         doubleSpinBox->setValue(1.000000000000000);
-        spinBox_2 = new QSpinBox(TreeOptions);
-        spinBox_2->setObjectName(QString::fromUtf8("spinBox_2"));
-        spinBox_2->setGeometry(QRect(140, 110, 51, 31));
-        spinBox_2->setMinimum(1);
-        spinBox_2->setMaximum(10);
-        spinBox_2->setValue(1);
-        label_3 = new QLabel(TreeOptions);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(10, 110, 121, 31));
         comboBox = new QComboBox(TreeOptions);
         comboBox->addItem(QString());
         comboBox->addItem(QString());
@@ -135,6 +126,9 @@ public:
         label_4 = new QLabel(TreeOptions);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(10, 150, 181, 21));
+        checkBox = new QCheckBox(TreeOptions);
+        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+        checkBox->setGeometry(QRect(10, 120, 171, 23));
 
         Configuration->addWidget(TreeOptions);
 
@@ -193,8 +187,8 @@ public:
         QObject::connect(glwidget, SIGNAL(SetFramerate(QString)), Label_NumFramerate, SLOT(setText(QString)));
         QObject::connect(spinBox, SIGNAL(valueChanged(int)), glwidget, SLOT(SetNumInstances(int)));
         QObject::connect(doubleSpinBox, SIGNAL(valueChanged(double)), glwidget, SLOT(SetDistanceOffset(double)));
-        QObject::connect(spinBox_2, SIGNAL(valueChanged(int)), glwidget, SLOT(SetLevelOfDetail(int)));
         QObject::connect(comboBox, SIGNAL(currentTextChanged(QString)), glwidget, SLOT(SetMethod(QString)));
+        QObject::connect(checkBox, SIGNAL(clicked(bool)), glwidget, SLOT(SetHysteriesis(bool)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -212,17 +206,17 @@ public:
         TreeOptions->setTitle(QApplication::translate("MainWindow", "Options", nullptr));
         label->setText(QApplication::translate("MainWindow", "Num. instances              per dimension", nullptr));
         label_2->setText(QApplication::translate("MainWindow", "Distance between instances", nullptr));
-        label_3->setText(QApplication::translate("MainWindow", "Cell subdivisions", nullptr));
         comboBox->setItemText(0, QApplication::translate("MainWindow", "Mean", nullptr));
         comboBox->setItemText(1, QApplication::translate("MainWindow", "Error Quadrics", nullptr));
         comboBox->setItemText(2, QApplication::translate("MainWindow", "Shape-Preserving", nullptr));
         comboBox->setItemText(3, QApplication::translate("MainWindow", "Voxelize", nullptr));
 
         label_4->setText(QApplication::translate("MainWindow", "Method for selecting vertices", nullptr));
+        checkBox->setText(QApplication::translate("MainWindow", "Hysteriesis function", nullptr));
         RenderOptions->setTitle(QApplication::translate("MainWindow", "Object and Scene Information", nullptr));
         Label_NumFaces->setText(QApplication::translate("MainWindow", "0", nullptr));
-        Label_Faces->setText(QApplication::translate("MainWindow", "Faces", nullptr));
-        Label_Vertices->setText(QApplication::translate("MainWindow", "Vertices", nullptr));
+        Label_Faces->setText(QApplication::translate("MainWindow", "Face sum", nullptr));
+        Label_Vertices->setText(QApplication::translate("MainWindow", "Vtx sum", nullptr));
         Label_NumVertices->setText(QApplication::translate("MainWindow", "0", nullptr));
         Label_Framerate->setText(QApplication::translate("MainWindow", "Framerate", nullptr));
         Label_NumFramerate->setText(QApplication::translate("MainWindow", "0", nullptr));

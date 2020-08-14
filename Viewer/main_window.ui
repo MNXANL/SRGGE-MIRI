@@ -106,7 +106,7 @@
           </rect>
          </property>
          <property name="maximum">
-          <number>100</number>
+          <number>50</number>
          </property>
          <property name="value">
           <number>1</number>
@@ -145,38 +145,6 @@
          </property>
          <property name="value">
           <double>1.000000000000000</double>
-         </property>
-        </widget>
-        <widget class="QSpinBox" name="spinBox_2">
-         <property name="geometry">
-          <rect>
-           <x>140</x>
-           <y>110</y>
-           <width>51</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>10</number>
-         </property>
-         <property name="value">
-          <number>1</number>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_3">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>110</y>
-           <width>121</width>
-           <height>31</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Cell subdivisions</string>
          </property>
         </widget>
         <widget class="QComboBox" name="comboBox">
@@ -220,6 +188,19 @@
          </property>
          <property name="text">
           <string>Method for selecting vertices</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="checkBox">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>120</y>
+           <width>171</width>
+           <height>23</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Hysteriesis function</string>
          </property>
         </widget>
        </widget>
@@ -286,7 +267,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Faces</string>
+          <string>Face sum</string>
          </property>
         </widget>
         <widget class="QLabel" name="Label_Vertices">
@@ -299,7 +280,7 @@
           </rect>
          </property>
          <property name="text">
-          <string>Vertices</string>
+          <string>Vtx sum</string>
          </property>
         </widget>
         <widget class="QLabel" name="Label_NumVertices">
@@ -412,6 +393,7 @@
     <slot>SetDistanceOffset(double)</slot>
     <slot>SetLevelOfDetail(int)</slot>
     <slot>SetMethod(QString)</slot>
+    <slot>SetHysteriesis(bool)</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -498,22 +480,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBox_2</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>glwidget</receiver>
-   <slot>SetLevelOfDetail(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>806</x>
-     <y>172</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>575</x>
-     <y>335</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>comboBox</sender>
    <signal>currentTextChanged(QString)</signal>
    <receiver>glwidget</receiver>
@@ -526,6 +492,22 @@
     <hint type="destinationlabel">
      <x>574</x>
      <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>glwidget</receiver>
+   <slot>SetHysteriesis(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>677</x>
+     <y>161</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>550</x>
+     <y>387</y>
     </hint>
    </hints>
   </connection>

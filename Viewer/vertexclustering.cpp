@@ -109,14 +109,12 @@ int VertexClustering::buildCluster( std::vector<float>& vtx, std::vector<int>& f
 {
     //Set up data structures
     MAX_LOD = 10;
-    vtxPerLOD.resize(MAX_LOD);
-    facesPerLOD.resize(MAX_LOD);
-    normPerLOD.resize(MAX_LOD);
+    int STEP = 2;
+    int RATIO = 2;
 
-    // Use actual mesh values as LOD 0 (max detail)
-    vtxPerLOD[0] = vtx ;
-    facesPerLOD[0] = faces ;
-    normPerLOD[0] = normals ;
+    vtxPerLOD.resize((MAX_LOD / STEP) + 2);
+    facesPerLOD.resize((MAX_LOD / STEP) + 2);
+    normPerLOD.resize((MAX_LOD / STEP) + 2);
 
 
     // Dimensions
@@ -135,9 +133,22 @@ int VertexClustering::buildCluster( std::vector<float>& vtx, std::vector<int>& f
     std::vector< int > numVtx_To_cellGrid( NumVertices, -1 );
 
 
+    std::cout << "There are " << (MAX_LOD / STEP) + 1 << " items to add\n" ;
+    int NumLods = 0; //1
+
+    newVtx.resize(0);
+    newFaces.resize(0);
+    newNormals.resize(0);
+/*
+    // Use void mesh values as LOD 0 ("no" detail)
+    vtxPerLOD[0]   = newVtx ;
+    facesPerLOD[0] = newFaces ;
+    normPerLOD[0]  = newNormals ;
+*/
 
     // For each level of detail 2 to MAX_LOD+1 ...
-    for (int LOD = 2; LOD <= MAX_LOD; ++LOD ){
+    for (int LOD = 2; LOD <= RATIO*MAX_LOD; LOD += RATIO*STEP )
+    {
         int level3D = LOD*LOD*LOD; // LOD ^ 3
 
         // Create new structures for this LOD
@@ -336,7 +347,7 @@ int VertexClustering::buildCluster( std::vector<float>& vtx, std::vector<int>& f
             }
         }
 
-        vtxPerLOD[LOD - 1]   = newVtx;
+        vtxPerLOD[NumLods]   = newVtx;
         // Get the vtxs from each face
         for (int i = 0 ; i < NumFaces ; ++i) {
             int vtx1 = faces[ 3*i + 0 ];
@@ -357,14 +368,27 @@ int VertexClustering::buildCluster( std::vector<float>& vtx, std::vector<int>& f
 
             }
         }
-        facesPerLOD[LOD - 1] = newFaces;
+        facesPerLOD[NumLods] = newFaces;
 
         newNormals.resize( vtx.size() );
-        getNewNormals( vtxPerLOD[LOD - 1], facesPerLOD[LOD - 1], newNormals );
-        normPerLOD[LOD - 1]  = newNormals;
+        getNewNormals( vtxPerLOD[NumLods], facesPerLOD[NumLods], newNormals );
+        normPerLOD[NumLods]  = newNormals;
 
+        ++NumLods;
+        std::cout << NumLods << "th item is the next iteration to add...\n";
+
+
+        if (LOD == 2) LOD = RATIO*2;
     }
-    return MAX_LOD;
+
+    std::cout << "Ended with " << NumLods << " items\n";
+    //Finally add full detail LOD at the end
+    vtxPerLOD[NumLods]   = vtx;
+    facesPerLOD[NumLods] = faces;
+    normPerLOD[NumLods]  = normals;
+
+
+    return NumLods + 2;
 }
 
 

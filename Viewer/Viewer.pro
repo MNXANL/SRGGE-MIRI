@@ -4,7 +4,7 @@ QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ViewerPBS
+TARGET = ViewerSR
 TEMPLATE = app
 
 CONFIG += c++14
@@ -25,6 +25,7 @@ INCLUDEPATH += /usr/include/eigen3/
 LIBS += -lGLEW
 
 SOURCES += \
+    mapmanager.cpp \
     triangle_mesh.cc \
     mesh_io.cc \
     main.cc \
@@ -34,6 +35,7 @@ SOURCES += \
     vertexclustering.cpp
 
 HEADERS  += \
+    mapmanager.h \
     triangle_mesh.h \
     mesh_io.h \
     main_window.h \

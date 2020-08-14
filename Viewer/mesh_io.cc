@@ -184,6 +184,8 @@ bool ReadFromPly(const std::string &filename, TriangleMesh *mesh) {
   return true;
 }
 
+float boundingBox3Diagonal( TriangleMesh *mesh) {}
+
 bool WriteToPly(const std::string &filename, const TriangleMesh &mesh) {
   (void)filename;
   (void)mesh;
